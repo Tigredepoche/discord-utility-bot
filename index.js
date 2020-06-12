@@ -4,10 +4,13 @@ const bot = new Discord.Client({
 });
 const fetch = require('node-fetch');
 const { token, clientID, oauth } = require('./config.json');
+const twitchChannelName = 'tigre_de_poche';
 
 bot.once('ready', async () => {
   console.log('Ready!');
-  const url = 'https://api.twitch.tv/helix/streams/?user_login=tigre_de_poche';
+
+  // Idk if its the best to put this there, but it's a very basic bot so i guess it work
+  const url = `https://api.twitch.tv/helix/streams/?user_login=${twitchChannelName}`;
 
   const options = {
     headers: {
@@ -29,38 +32,40 @@ bot.once('ready', async () => {
         }
         if (streamtime === data.data[0].started_at) {
           console.log('stream already shared');
-        } else {
-          const channel = bot.channels.cache.get('720782948613488701');
-
-          const embedStream = new Discord.MessageEmbed()
-            .setColor('#6a0dad')
-            .setTitle(
-              `Titre: ${data.data[0].title} | Jeu: ${data.data[0].game_id}`
-            )
-            .setURL('https://twitch.tv/tigre_de_poche')
-            .setAuthor(
-              `Tigre de poche est en stream : https://twitch.tv/tigre_de_poche`,
-              'https://static-cdn.jtvnw.net/jtv_user_pictures/tigre_de_poche-profile_image-ec2951207204f8ed-70x70.png',
-              'https://twitch.tv/tigre_de_poche'
-            )
-            .setThumbnail(
-              `https://static-cdn.jtvnw.net/previews-ttv/live_user_${data.data[0].user_name.toLowerCase()}-640x360.jpg`
-            )
-            .setTimestamp()
-            .setFooter('Il faut venir !!!');
-
-          channel.send(embedStream);
-          streamtime = data.data[0].started_at;
-          console.log(streamtime);
         }
+        const channel = bot.channels.cache.get('720782948613488701');
+
+        const embedStream = new Discord.MessageEmbed()
+          .setColor('#6a0dad')
+          .setTitle(`Titre: ${data.data[0].title}`)
+          .setURL(`https://twitch.tv/${twitchChannelName}`)
+          .setAuthor(
+            `${
+              twitchChannelName.charAt(0).toUpperCase() +
+              twitchChannelName.slice(1)
+            } est en stream : https://twitch.tv/tigre_de_poche`,
+            `https://static-cdn.jtvnw.net/jtv_user_pictures/${twitchChannelName}-profile_image-ec2951207204f8ed-70x70.png`,
+            `https://twitch.tv/${twitchChannelName}`
+          )
+          .setThumbnail(
+            `https://static-cdn.jtvnw.net/previews-ttv/live_user_${data.data[0].user_name.toLowerCase()}-640x360.jpg`
+          )
+          .setTimestamp()
+          .setFooter('Il faut venir !!!');
+
+        channel.send(embedStream);
+        streamtime = data.data[0].started_at;
+        console.log(streamtime);
       }, 120000);
     });
 });
 
-const Yard = '720411726830370928';
-const MessageNumber = '720413679299985458';
+// Add role by adding a react to message
 
-bot.on('message', async (message) => {});
+// Put the role ID there
+const Yard = '720411726830370928';
+// Put the message ID you want to watch
+const MessageNumber = '720413679299985458';
 
 bot.on('messageReactionAdd', async (reaction, user) => {
   console.log('Message Reaction Add Top');
