@@ -4,7 +4,9 @@ const bot = new Discord.Client({
 });
 const fetch = require('node-fetch');
 const { token, clientID, oauth } = require('./config.json');
-const twitchChannelName = 'tigre_de_poche';
+const twitchChannelName = 'Tigre_de_poche';
+const avatar =
+  'https://static-cdn.jtvnw.net/jtv_user_pictures/tigre_de_poche-profile_image-ec2951207204f8ed-70x70.png';
 
 bot.once('ready', async () => {
   console.log('Ready!');
@@ -43,8 +45,8 @@ bot.once('ready', async () => {
             `${
               twitchChannelName.charAt(0).toUpperCase() +
               twitchChannelName.slice(1)
-            } est en stream : https://twitch.tv/tigre_de_poche`,
-            `https://static-cdn.jtvnw.net/jtv_user_pictures/${twitchChannelName}-profile_image-ec2951207204f8ed-70x70.png`,
+            } est en stream : https://twitch.tv/${twitchChannelName}`,
+            avatar,
             `https://twitch.tv/${twitchChannelName}`
           )
           .setThumbnail(
