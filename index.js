@@ -4,7 +4,7 @@ const bot = new Discord.Client({
 });
 const fetch = require('node-fetch');
 const { token, clientID, oauth } = require('./config.json');
-const twitchChannelName = 'Tigre_de_poche';
+const twitchChannelName = 'tigre_de_poche';
 const avatar =
   'https://static-cdn.jtvnw.net/jtv_user_pictures/tigre_de_poche-profile_image-ec2951207204f8ed-70x70.png';
 
@@ -33,9 +33,9 @@ bot.once('ready', async () => {
           return console.log('No stream');
         }
         if (streamtime === data.data[0].started_at) {
-          console.log('stream already shared');
+          return console.log('stream already shared');
         }
-        const channel = bot.channels.cache.get('720782948613488701');
+        const channel = bot.channels.cache.get('720778140560916552');
 
         const embedStream = new Discord.MessageEmbed()
           .setColor('#6a0dad')
